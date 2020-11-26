@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.924,=C:\Users\nkaku\OneDrive\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.414,=D:\Work\VIMOVYAA\TestApps\ThreadPooling\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.088,D:\Work\VIMOVYAA\TestApps\ThreadPooling\Unit1.pas=D:\Work\VIMOVYAA\TestApps\ThreadPooling\untPool.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.364,=C:\Users\nkaku\OneDrive\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.620,C:\Users\nkaku\OneDrive\Documents\Embarcadero\Studio\Projects\Project2.dproj=D:\Work\VIMOVYAA\TestApps\ThreadPooling\prjPooling.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.299,C:\Users\nkaku\OneDrive\Documents\Embarcadero\Studio\Projects\Unit2.fmx=D:\Work\VIMOVYAA\TestApps\ThreadPooling\MainF.fmx</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.299,C:\Users\nkaku\OneDrive\Documents\Embarcadero\Studio\Projects\Unit2.pas=D:\Work\VIMOVYAA\TestApps\ThreadPooling\MainF.pas</Transaction>
+  </Transactions>
+	<ActiveMobileDevice>
+		<PCatalina iOSSimulator="iPhone5"/>
+	</ActiveMobileDevice>
+</BorlandProject>
