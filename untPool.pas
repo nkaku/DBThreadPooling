@@ -11,10 +11,10 @@ uses
   System.Threading, System.Classes;
 
 type
-  TCallback = procedure(s: string) of object;
+  TSQLType = (stOpen, stExecute);
+  TCallback = procedure(SQLType: TSQLType; Q: TFDQuery) of object;
 
-function OpenSQL(sSQL: string; pCallback: TCallback = nil): TFDQuery;
-function ExecSQL(sSQL: string; pCallback: TCallback = nil): Integer;
+procedure RunSQL(sSQL: string; SQLType: TSQLType = stExecute; pCallback: TCallback = nil);
 
 implementation
 
@@ -22,7 +22,6 @@ uses
   System.SysUtils;
 
 type
-  TSQLType = (stOpen, stExecute);
 
   TPooledQuery = class(TThread)
   private
@@ -37,7 +36,6 @@ type
     procedure Execute; override;
   public
     CallBack: TCallback;
-
     procedure Initialise;
     procedure Finalise;
     property Connection: TFDConnection read FConnection;
@@ -50,34 +48,17 @@ var
   Queries: TArray<TPooledQuery>;
   LastUsed: Integer;
 
-function ExecSQL(sSQL: string; pCallback: TCallback = nil): Integer;
+procedure RunSQL(sSQL: string; SQLType: TSQLType = stExecute; pCallback: TCallback = nil);
 begin
   Inc(LastUsed);
   if LastUsed = Length(Queries) then
     LastUsed := 0;
 
   Queries[LastUsed].CallBack := pCallback;
-  Queries[LastUsed].SQLType := stExecute;
+  Queries[LastUsed].SQLType := SQLType;
   Queries[LastUsed].SQL := sSQL;
   if Queries[LastUsed].Suspended then
     Queries[LastUsed].Start;
-
-  Result := Queries[LastUsed].Query.RowsAffected;
-end;
-
-function OpenSQL(sSQL: string; pCallback: TCallback = nil): TFDQuery;
-begin
-  Inc(LastUsed);
-  if LastUsed = Length(Queries) then
-    LastUsed := 0;
-
-  Queries[LastUsed].CallBack := pCallback;
-  Queries[LastUsed].SQLType := stOpen;
-  Queries[LastUsed].SQL := sSQL;
-  if Queries[LastUsed].Suspended then
-    Queries[LastUsed].Start;
-
-  Result := Queries[LastUsed].Query;
 end;
 
 procedure CreatePool(NoOfWorkers: Integer);
@@ -132,7 +113,7 @@ begin
         procedure
         begin
           if Assigned(CallBack) then
-            CallBack(IntToStr(LastUsed)+'-'+FSQL);
+            CallBack(FSQLType, FQuery);
         end);
       FResume := False;
     end;
