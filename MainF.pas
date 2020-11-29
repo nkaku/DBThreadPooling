@@ -42,12 +42,16 @@ end;
 procedure TForm2.Button2Click(Sender: TObject);
 var
   s: string;
+
 begin
   s := 'select * from users where UID = ' + Random(531).ToString;
   RunSQL(s, stOpen, AfterRun);
 
   s := 'insert into users (username) values ('+QuotedStr(Random(99999).ToString)+')';
   RunSQL(s, stExecute, AfterRun);
+
+  s := 'call test_sp()';
+  RunSQL(s, stOpen, AfterRun);
 
 end;
 

@@ -31,6 +31,7 @@ type
     FResume: Boolean;
     FShutdown: Boolean;
     FSQLType: TSQLType;
+    FIsGUIApp: Boolean;
     procedure SetSQL(const Value: string);
   protected
     procedure Execute; override;
@@ -42,6 +43,7 @@ type
     property Query: TFDQuery read FQuery;
     property SQL: string read FSQL write SetSQL;
     property SQLType: TSQLType write FSQLType;
+    property IsGUIApp: Boolean read FIsGUIApp;
   end;
 
 var
@@ -109,12 +111,17 @@ begin
       else
         FQuery.ExecSQL(FSQL);
 
-      Synchronize(
-        procedure
-        begin
-          if Assigned(CallBack) then
-            CallBack(FSQLType, FQuery);
-        end);
+      if FIsGUIApp then
+        Synchronize(
+          procedure
+          begin
+            if Assigned(CallBack) then
+              CallBack(FSQLType, FQuery);
+          end)
+      else
+        if Assigned(CallBack) then
+              CallBack(FSQLType, FQuery);
+
       FResume := False;
     end;
 
